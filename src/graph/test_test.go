@@ -6,20 +6,23 @@ import(
 )
 
 func TestNode(t *testing.T){
-	var n Node
-	n.Setname("x")
-	str:=n.Getname()
-	fmt.Println(str)
+	n:=NewDefaultNode("x")
+	fmt.Println(n.Getname(),n.Isob())
+	n.Setname("y")
+	n.Setob(false)
+	fmt.Println(n.Getname(),n.Isob())
 }
 
 func TestEdge(t *testing.T){
-	var A,B Node
-	A.Setname("A")
-	B.Setname("B")
+	A := NewDefaultNode("x")
+	B := NewNode("y",false)
 	e:=NewDefaultEdge(A,B)
 	fmt.Println(e)
-	e=NewEdge(A,B,Arrow,Tail)
+	e=NewEdge(A,Arrow,B,Tail)
 	fmt.Println(e)
-	e=NewEdge(A,B,Undefined,Arrow)
+	B.Setob(true)
+	fmt.Println(A.Isob(),B.Isob(),e.Isob())
+	fmt.Println(e)
+	e=NewEdge(A,Undefined,B,Arrow)
 	fmt.Println(e)
 }
