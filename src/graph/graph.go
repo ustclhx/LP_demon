@@ -16,6 +16,11 @@ func (g Graph) IsNodeIn(n Node) bool{
 	return ok
 }
 
+func (g Graph) IsEdgeIn(e Edge) bool{
+	_,ok := g.edges[*e.nodes[0]][*e.nodes[1]]
+	return ok
+}
+
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
 	edges := make(map[Node]map[Node]*Edge)
 	indegree := make(map[Node]int)
@@ -45,10 +50,14 @@ func (g *Graph) AddEdge(e *Edge)(err error){
 	for i:=0;i<=1;i++{
 		ok := g.IsNodeIn(*e.nodes[i])
 		if !ok{
-			err = fmt.Errorf("the edge between node %s and node %s has the node %s not in the graph",e.nodes[0].name,e.nodes[1].name,e.nodes[i].name)
+			err = fmt.Errorf("the edge %s, has the node %s not in the graph",e,e.nodes[i].name)
 			return			
 		}
 	}
+	if ok:= g.IsEdgeIn(*e); ok{
+			err = fmt.Errorf("There is an edge between node %s and node %s here, can't add a new one ", e.nodes[0].name, e.nodes[1].name)
+			return
+		}
 	g.edges[*e.nodes[0]][*e.nodes[1]]= e
 	g.edges[*e.nodes[1]][*e.nodes[0]]= e
 	//increase the degree
@@ -64,11 +73,28 @@ func (g *Graph) AddEdge(e *Edge)(err error){
 
 func (g *Graph) AddDirectedEdge(e *Edge) (err error){
 	if !e.IsDirected(){
-		err = fmt.Errorf("the edge between node %s and node %s is not a directed edge", e.nodes[0].name,e.nodes[1].name)
+		err = fmt.Errorf("the edge %s is not a directed edge", e)
 	}
 	err = g.AddEdge(e)
 	return
 }
+
+func (g *Graph) RemoveEdge(e *Edge) (err error){
+	if g.edges[*e.nodes[0]][*e.nodes[1]] == nil || g.edges[*e.nodes[1]][*e.nodes[0]]==nil{
+		err = fmt.Errorf("the edge %s is not in the graph",e)
+	}
+	delete(g.edges[*e.nodes[0]],*e.nodes[1])
+	delete(g.edges[*e.nodes[1]],*e.nodes[0])
+	if e.IsDirected(){
+		if e.endpoints[*e.nodes[0]] == Arrow{
+			g.in_degree[*e.nodes[0]]--
+		}else{
+			g.in_degree[*e.nodes[1]]--
+		}
+	}
+	return
+}
+
 
 func (g *Graph) Toposort() (sort []Node, ok bool){
 	queue := make([]Node,0)
