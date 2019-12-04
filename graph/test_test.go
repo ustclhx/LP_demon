@@ -99,3 +99,48 @@ func TestDag(t *testing.T){
 		fmt.Println(err.Error())
 	}
 }
+
+func TestTriple(t *testing.T){
+	nodes := make([]*Node,0) 
+	edges := make([]*Edge,0)
+	triples :=make([]*Triple,0)
+	for i :=0;i<5;i++{
+		node := NewDefaultNode(strconv.Itoa(i))
+		nodes = append(nodes,node)
+	}
+	for i:=0;i<3;i++{
+		triple := NewTriple(nodes[i],nodes[i+1],nodes[i+2])
+		triples = append(triples,triple)
+	}
+	edges = append(edges,NewEdge(nodes[0],Tail,nodes[1],Arrow))
+	edges = append(edges,NewEdge(nodes[1],Tail,nodes[2],Arrow))
+	edges = append(edges,NewEdge(nodes[3],Tail,nodes[2],Arrow))
+	edges = append(edges,NewEdge(nodes[3],Tail,nodes[4],Arrow))
+	if d,err :=NewDag(nodes,edges);err!= nil{
+		fmt.Println(err.Error())
+	}else{
+		for _,t := range triples{
+			_,s,_ := d.Identify(t)
+			fmt.Println("the triple",t,"is a",s)
+		}
+	}
+}
+
+func TestPath(t *testing.T){
+	nodes := make([]*Node,0)
+	for i :=0;i<5;i++{
+		node := NewDefaultNode(strconv.Itoa(i))
+		nodes = append(nodes,node)
+	}
+	p := NewEmptyPath(*nodes[0],*nodes[4])
+	p.PushNode(*nodes[1])
+	p.PushNode(*nodes[3])
+	fmt.Println(p)
+	for i :=0;i<3;i++{
+		if n,ok := p.PopNode();!ok{
+			fmt.Println("the path is empty now!")
+		}else{
+			fmt.Println(n.name)
+		}
+	}
+}

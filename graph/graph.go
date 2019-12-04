@@ -21,6 +21,11 @@ func (g Graph) IsEdgeIn(e Edge) bool{
 	return ok
 }
 
+func (g Graph) IsAdjacentto(A *Node, B *Node) bool{
+	_,ok := g.edges[*A][*B]
+	return ok
+}
+
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
 	edges := make(map[Node]map[Node]*Edge)
 	indegree := make(map[Node]int)
@@ -47,6 +52,9 @@ func (g *Graph) AddNode(n *Node){
 }
 
 func (g *Graph) AddEdge(e *Edge)(err error){
+	if e.nodes[0].name == e.nodes[1].name {
+		err = fmt.Errorf("wrong edge form %s to itself",e.nodes[0].name)
+	}
 	for i:=0;i<=1;i++{
 		ok := g.IsNodeIn(*e.nodes[i])
 		if !ok{
