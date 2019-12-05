@@ -21,6 +21,7 @@ func (g *Graph) dfs(from Node, now Node, to Node,path []Node, paths *[]*Path){
 	}else{
 		for n,_ :=range g.edges[now]{
 			state := false
+			//the node in the path will not be considered again
 			for _,innode := range path{
 				if n == innode {
 					state = true
@@ -34,4 +35,27 @@ func (g *Graph) dfs(from Node, now Node, to Node,path []Node, paths *[]*Path){
 			}
 		} 
 	}
+}
+
+func (d *Dag) AllDescendant(n Node) []Node{
+	nodestack := make([]Node,0)
+	desc := make(map[Node] bool)
+	descendant := make([]Node,0)
+	nodestack = append(nodestack,n)
+	for len(nodestack)>0{
+		node := nodestack [len(nodestack)-1]
+		nodestack = nodestack[:len(nodestack)-1]
+		for adj,e := range d.edges[node]{
+			if e.endpoints[adj] == Arrow && !desc[adj] && adj != n{
+				desc[adj] = true
+				nodestack = append(nodestack,adj)
+			}
+		}
+	}
+	for node,b := range desc{
+		if b{
+			descendant = append(descendant,node)
+		}
+	}
+	return descendant
 }

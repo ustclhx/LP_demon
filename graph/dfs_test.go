@@ -23,12 +23,16 @@ func TestDfs(t *testing.T){
 	edges = append(edges,NewEdge(nodes[4],Arrow,nodes[7],Tail))
 	edges = append(edges,NewEdge(nodes[5],Arrow,nodes[6],Tail))
 	edges = append(edges,NewEdge(nodes[6],Arrow,nodes[8],Tail))
-	if g,err := NewGraph(nodes,edges);err != nil{
+	if d,err := NewDag(nodes,edges);err != nil{
 		fmt.Println(err.Error())
 	}else{
-		paths := g.DFSpath(*nodes[3],*nodes[6])
+		paths := d.DFSpath(*nodes[3],*nodes[6])
 		for _,p:= range paths{
 			fmt.Println(p)
+		}
+		desc := d.AllDescendant(*nodes[8])
+		for _,n:= range desc{
+			fmt.Println(n.name)
 		}
 	}
 
