@@ -109,7 +109,7 @@ func TestTriple(t *testing.T){
 		nodes = append(nodes,node)
 	}
 	for i:=0;i<3;i++{
-		triple := NewTriple(nodes[i],nodes[i+1],nodes[i+2])
+		triple := NewTriple(*nodes[i],*nodes[i+1],*nodes[i+2])
 		triples = append(triples,triple)
 	}
 	edges = append(edges,NewEdge(nodes[0],Tail,nodes[1],Arrow))

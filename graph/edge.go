@@ -47,6 +47,10 @@ func (e Edge) IsDirected()bool{
 	return (end_0 == Arrow && end_1 == Tail)||(end_0 == Tail && end_1 == Arrow)
 }
 
+func (e Edge) Endpoint(N Node) int{
+	return e.endpoints[N]
+}
+
 func (e Edge) String() string{
 	var s [2]string
 	var ob string

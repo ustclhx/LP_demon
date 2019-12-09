@@ -21,9 +21,13 @@ func (g Graph) IsEdgeIn(e Edge) bool{
 	return ok
 }
 
-func (g Graph) IsAdjacentto(A *Node, B *Node) bool{
-	_,ok := g.edges[*A][*B]
+func (g Graph) IsAdjacentto(A Node, B Node) bool{
+	_,ok := g.edges[A][B]
 	return ok
+}
+
+func (g Graph) Edges(A Node) map[Node]*Edge{
+	return g.edges[A]
 }
 
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
