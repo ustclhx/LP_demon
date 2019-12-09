@@ -57,14 +57,20 @@ func (p Path) String() string{
 	return fmt.Sprintf(s)
 }
 
-func (g *Graph) IdentifyPath(p *Path) (map[Node]int, error){
-	triples := make(map[Node]int)
+func (g *Graph) IdentifyPath(p *Path) (map[string][]Node, error){
+	triples := make(map[string][]Node)
 	for i :=1;i<=len(p.nodes)-2;i++{
 		t := NewTriple(p.nodes[i-1],p.nodes[i],p.nodes[i+1])
 		if ty,_,err := g.Identify(t); err != nil{
 			return nil,err 
 		}else{
-		triples[p.nodes[i]] = ty
+			if ty == Collider{
+				triples["collider"] = append(triples["collider"],p.nodes[i])
+			}else if ty == Fork{
+				triples["fork"] = append(triples["fork"],p.nodes[i])
+			}else{
+				triples["chain"] = append(triples["chain"],p.nodes[i])
+			}
 		}
 	}
 	return triples,nil
