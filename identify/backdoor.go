@@ -2,6 +2,7 @@ package identify
 
 import(
 	"LP_demon/graph"
+	"github.com/crillab/gophersat/solver"
 )
 /*
 It's a np-complete problem to find all the sets of nodes 
@@ -70,3 +71,18 @@ func backverify_dag_o2o(d *graph.Dag, t graph.Node, o graph.Node, z []graph.Node
 	}
 	return true 
 }
+
+//for a pair of treatment and outcome, determine whether there is a set of nodes can meet
+//the backdoor criterion, if the answer is yes , also return a feasible solution
+func backsearch_dag_o2o(d *graph.Dag,t graph.Node,o graph.Node)(bool,[]graph.Node){
+	backpath,desc := backpath_dag_o2o(d,t,o)
+	nodeindex := make(map[graph.Node]int)
+	for i,n := range d.Nodes(){
+		nodeindex[*n] = i+1
+	}
+	clauses := make([][]int,0)
+	for _,n := range desc{
+		i := -nodeindex[n]
+		clauses = append(clauses,[]int{i})
+	}
+} 

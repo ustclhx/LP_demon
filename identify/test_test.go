@@ -43,7 +43,19 @@ func TestBackverify(t *testing.T){
 	}else{
 		fmt.Println("false")
 	}
+	z = append(z,*nodes[2])
+	if backverify_dag_o2o(d,*nodes[0],*nodes[7],z){
+		fmt.Println("true")
+	}else{
+		fmt.Println("false")
+	}
+	z = z[1:]
 	z2 := make([]graph.Node,0)
+	if backverify_dag_o2o(d,*nodes[0],*nodes[7],z){
+		fmt.Println("true")
+	}else{
+		fmt.Println("false")
+	}
 	z = append(z,*nodes[6])
 	if backverify_dag_o2o(d,*nodes[0],*nodes[7],z2){
 		fmt.Println("true")
