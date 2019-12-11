@@ -3,6 +3,7 @@ package identify
 import(
 	"LP_demon/graph"
 	"github.com/crillab/gophersat/solver"
+	"fmt"
 )
 /*
 It's a np-complete problem to find all the sets of nodes 
@@ -77,12 +78,56 @@ func backverify_dag_o2o(d *graph.Dag, t graph.Node, o graph.Node, z []graph.Node
 func backsearch_dag_o2o(d *graph.Dag,t graph.Node,o graph.Node)(bool,[]graph.Node){
 	backpath,desc := backpath_dag_o2o(d,t,o)
 	nodeindex := make(map[graph.Node]int)
-	for i,n := range d.Nodes(){
+	clauses := make([][]int,0) 
+	z := make([]graph.Node,0)
+	var status bool
+	nodes := d.Nodes()
+	//turn the backdoor search problem to a sat problem
+	for i,n := range nodes{
 		nodeindex[*n] = i+1
+		if !n.Isob(){
+			clauses = append(clauses,[]int{-(i+1)})
+		}
 	}
-	clauses := make([][]int,0)
 	for _,n := range desc{
 		i := -nodeindex[n]
 		clauses = append(clauses,[]int{i})
 	}
+	for _,p := range backpath{
+		clause := make([]int,0)
+		ty,_ := d.IdentifyPath(p)
+		for _,n := range ty["collider"]{
+			i := -nodeindex[n]
+			clause = append(clause,i)
+		}
+		for _,n := range ty["fork"]{
+			i := nodeindex[n]
+			clause = append(clause,i)
+		}
+		for _,n := range ty["chain"]{
+			i := nodeindex[n]
+			clause = append(clause,i)
+		}
+		clauses = append(clauses,clause)
+	}
+	for _,c :=range clauses{
+		for _,i:= range c{
+			fmt.Printf("%v ",i)	
+		}
+		fmt.Printf("\n")
+	}
+	// use the gophersat lib to solve the sat problem
+	pb := solver.ParseSlice(clauses)
+	s := solver.New(pb)
+	stat :=s.Solve()
+	if stat == solver.Sat{
+		status = true
+	}
+	m:=s.Model()
+	for i,b := range m{
+		if b{
+			z = append(z,*nodes[i])
+		}
+	}
+	return status,z
 } 

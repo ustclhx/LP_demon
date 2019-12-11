@@ -63,3 +63,15 @@ func TestBackverify(t *testing.T){
 		fmt.Println("false")
 	}
 }
+
+func TestBackSearch(t *testing.T){
+	d,nodes := back_example_1()
+	status, z := backsearch_dag_o2o(d,*nodes[0],*nodes[7])
+	if status{
+		for _,n := range z{
+			fmt.Println(n.Getname())
+		}
+	}else{
+		fmt.Printf("no invalid backdoor")
+	}
+}

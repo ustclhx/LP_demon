@@ -20,7 +20,7 @@ func main(){
 	}
 	pb := solver.ParseSlice(clauses)
 	s := solver.New(pb)
-	s.Solve()
-
+	status := s.Solve()
+	fmt.Println(status)
 	s.OutputModel()
 }
