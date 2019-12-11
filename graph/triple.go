@@ -4,6 +4,8 @@ import(
 	"fmt"
 )
 
+type Tripletype int 
+
 const(
 	Chain = 1
 	Fork = 2
@@ -30,7 +32,7 @@ func (t Triple) String() string{
 	return fmt.Sprintf("{%v %v %v}",t.nodes[0].name,t.nodes[1].name,t.nodes[2].name)
 }
 
-func (g *Graph) Identify(t *Triple) (i int, s string, err error){
+func (g *Graph) Identify(t *Triple) (ty Tripletype, s string, err error){
 	s = "undefined"
 	if !g.IsTriplein(*t){
 		err = fmt.Errorf("the triple %s does't in the graph",t)

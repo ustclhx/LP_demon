@@ -16,11 +16,24 @@ func main(){
 		[]int{4},
 		[]int{2,4,5},
 		[]int{1,3,4},
+		[]int{1,3,4},
 		[]int{1,2,3,5,-4},
 	}
 	pb := solver.ParseSlice(clauses)
 	s := solver.New(pb)
-	status := s.Solve()
-	fmt.Println(status)
+	s.Solve()
+	//fmt.Println(status)
 	s.OutputModel()
+	fmt.Println(pb.Optim())
+	models := make(chan []bool)
+	stop := make(chan struct{})
+	go s.Enumerate(models,stop)
+	for m := range models{
+		for i,b := range m{
+			if b{
+				fmt.Printf("%v, ",i+1)
+			}
+		}
+		fmt.Printf("\n")
+	}
 }
