@@ -15,7 +15,7 @@ provide approximate algotithms or heruistic algorithms
 func Backpath_dag_o2o(d *graph.Dag,treatment graph.Node, outcome graph.Node) ([]*graph.Path,[]graph.Node){
 	desc := d.AllDescendant(treatment)
 	backdoor :=  make([]*graph.Path,0)
-	paths := d.DFSpath(treatment,outcome)
+	paths := d.DFSpath(treatment,outcome,false)
 	for _,path := range paths{
 		node := path.Nodes()[1]
 		e := d.Edges(treatment)[node]

@@ -26,9 +26,13 @@ func TestDfs(t *testing.T){
 	if d,err := NewDag(nodes,edges);err != nil{
 		fmt.Println(err.Error())
 	}else{
-		paths := d.DFSpath(*nodes[3],*nodes[6])
+		paths := d.DFSpath(*nodes[6],*nodes[0],true)
 		for _,p:= range paths{
 			fmt.Println(p)
+		}
+		paths = d.DFSpath(*nodes[3],*nodes[6],false)
+		for _,pi:= range paths{
+			fmt.Println(pi)
 		}
 		desc := d.AllDescendant(*nodes[8])
 		for _,n:= range desc{
