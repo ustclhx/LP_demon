@@ -4,7 +4,7 @@ import(
 	"testing"
 	"fmt" 
 	"strconv"
-)
+)	
 func TestDfs(t *testing.T){
 	nodes := make([]*Node,0)
 	for i :=0;i<=8;i++{
@@ -41,4 +41,29 @@ func TestDfs(t *testing.T){
 	}
 
      
+}
+
+func TestDesc(t *testing.T){
+	nodes := make([]*Node,0) 
+	edges := make([]*Edge,0)
+	nodes = append(nodes,NewDefaultNode("xi"))
+	for i := 1; i<= 6; i++{
+		nodes = append(nodes,NewDefaultNode("x"+strconv.Itoa(i)))
+	}
+	nodes = append(nodes,NewDefaultNode("xj"))
+	edges = append(edges,NewEdge(nodes[0],Tail,nodes[6],Arrow))
+	edges = append(edges,NewEdge(nodes[6],Tail,nodes[7],Arrow))
+	edges = append(edges,NewEdge(nodes[4],Tail,nodes[0],Arrow))
+	edges = append(edges,NewEdge(nodes[4],Tail,nodes[7],Arrow))
+	edges = append(edges,NewEdge(nodes[3],Tail,nodes[0],Arrow))
+	edges = append(edges,NewEdge(nodes[1],Tail,nodes[3],Arrow))
+	edges = append(edges,NewEdge(nodes[1],Tail,nodes[4],Arrow))
+	edges = append(edges,NewEdge(nodes[2],Tail,nodes[4],Arrow))
+	edges = append(edges,NewEdge(nodes[2],Tail,nodes[5],Arrow))
+	edges = append(edges,NewEdge(nodes[5],Tail,nodes[7],Arrow))
+	d,_ := NewDag(nodes,edges)
+	desc := d.AllDescendant(*nodes[4])
+	for _,n:= range desc{
+		fmt.Println(n.name)
+	}
 }

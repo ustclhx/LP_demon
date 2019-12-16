@@ -3,7 +3,7 @@ package identify
 import(
 	"LP_demon/graph"
 	"github.com/crillab/gophersat/solver"
-//	"fmt"
+	// "fmt"
 )
 /*
 It's a np-complete problem to find all the sets of nodes 
@@ -140,6 +140,7 @@ func backclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.Nod
 			for _,p := range backpath{
 				clause := make([]int,0)
 				ty,_ := d.IdentifyPath(p)
+				descs := make(map[int][]int)
 				for s,ns := range ty{
 					for _,n := range ns{
 						if _,ok := nodeindex[n];!ok{
@@ -148,12 +149,23 @@ func backclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.Nod
 						}
 						if s == "collider"{
 							clause = append(clause,-nodeindex[n])
+							loop:
 							for _,des := range d.AllDescendant(n){
+								for _,tj := range t{
+									if des == tj{
+										continue loop
+									}
+								}
+								for _,oj := range o{
+									if des == oj{
+										continue loop
+									}
+								}
 								if _,ok := nodeindex[des];!ok{
 									backnodes = append(backnodes,des)
 									nodeindex[des] = len(backnodes)
 								}
-								clause = append(clause,-nodeindex[des])
+								descs[nodeindex[n]] = append(descs[nodeindex[n]],nodeindex[des])
 							}
 						}else{
 							clause = append(clause,nodeindex[n])
@@ -161,6 +173,18 @@ func backclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.Nod
 					}
 				}
 				clauses = append(clauses,clause)
+				for i,di := range descs{
+					for _,d := range di{
+						newclause := make([]int,len(clause))
+						copy(newclause,clause)
+						for index,j := range newclause{
+							if i == -j{
+								newclause[index] = -d
+							}
+						}
+						clauses = append(clauses,newclause)
+					}
+				}
 			}	
 			for _,n := range desc{
 				if _,ok := nodeindex[n]; ok{
@@ -169,8 +193,7 @@ func backclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.Nod
 				}
 			}		
 		}
-	}
-	
+	}	
 	for i,n := range backnodes{
 		if !n.Isob(){
 			clauses = append(clauses,[]int{-(i+1)})

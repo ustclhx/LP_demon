@@ -145,4 +145,25 @@ func Test3_3_1(t *testing.T){
 	}else{
 		fmt.Printf("no invalid backdoor")
 	}
-} 
+}
+
+
+func TestDescendant(t *testing.T){
+	d,nodes := back_example_2()
+	if Backverify_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[5]},[]graph.Node{*nodes[4]}){
+		fmt.Println("true")
+	}else{
+		fmt.Println("false")
+	}
+	status, zs := Backminimal_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[5]})
+	if status{
+		for _,ns := range zs{
+			for _,n := range ns{
+				fmt.Printf("%s ",n.Getname())
+			}
+			fmt.Printf("\n")
+		}
+	}else{
+		fmt.Printf("no invalid backdoor")
+	}
+}
