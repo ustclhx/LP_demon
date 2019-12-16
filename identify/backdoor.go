@@ -54,6 +54,11 @@ func Backverify_dag(d *graph.Dag, t []graph.Node, o []graph.Node, z []graph.Node
 						if mapz[n] {
 							ok_1 = true
 						}
+						for _,des := range d.AllDescendant(n){
+							if mapz[des]{
+								ok_1 = true
+							}
+						} 
 					}
 				}
 				// determine whether the backpath is blocked by an adjusted fork or chain
@@ -100,7 +105,7 @@ func Backsearch_dag(d *graph.Dag,t []graph.Node,o []graph.Node)(bool,[]graph.Nod
 //search all the sets of nodes can satisfy the backdoor criterion between a pair of 
 //treatment and outcome.
 //Attention: for a high dimensional graph, it may cost a lot of time to find all sets
-func Backallsearch_dag (d *graph.Dag,t []graph.Node,o []graph.Node)(bool,[][]graph.Node){
+func Backallsearch_dag(d *graph.Dag,t []graph.Node,o []graph.Node)(bool,[][]graph.Node){
 	clauses,nodes := backclauses(d,t,o)
 	zs := make([][]graph.Node,0)
 	pb := solver.ParseSlice(clauses)
@@ -143,6 +148,13 @@ func backclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.Nod
 						}
 						if s == "collider"{
 							clause = append(clause,-nodeindex[n])
+							for _,des := range d.AllDescendant(n){
+								if _,ok := nodeindex[des];!ok{
+									backnodes = append(backnodes,des)
+									nodeindex[des] = len(backnodes)
+								}
+								clause = append(clause,-nodeindex[des])
+							}
 						}else{
 							clause = append(clause,nodeindex[n])
 						}
