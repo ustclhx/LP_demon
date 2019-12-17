@@ -220,6 +220,7 @@ func Backminimal_dag(d *graph.Dag,t []graph.Node,o []graph.Node)(bool,[][]graph.
 	} 
 	for _,ns := range z{
 		flag := false
+		// remove one node from z, judge if it still satisify the backdoor criterion
 		for i,_ := range ns{
 			nt := make([]graph.Node,len(ns))
 			copy(nt,ns)
