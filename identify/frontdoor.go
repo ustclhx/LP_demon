@@ -135,9 +135,7 @@ func frontclauses(d *graph.Dag,t []graph.Node,o []graph.Node)([][]int,[]graph.No
 						}
 					}
 				}
-				if len(clause)>0{
 					clauses = append(clauses,clause)
-				}
 			}
 		}
 	}

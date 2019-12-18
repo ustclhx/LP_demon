@@ -32,16 +32,18 @@ func TestFrontverify(t *testing.T){
 }
 
 func TestFrontsearch(t *testing.T){
-	d,nodes := front_example_1()
-	status, z := Frontsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[3]})
+	d,nodes := front_example_2()
+	fmt.Println("search:")
+	status, z := Frontsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,n := range z{
 			fmt.Println(n.Getname())
 		}
 	}else{
-		fmt.Printf("no invalid frontdoor")
+		fmt.Println("no invalid frontdoor")
 	}
-	status, zs := Frontallsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[3]})
+	fmt.Println("all:")
+	status, zs := Frontallsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,ns := range zs{
 			for _,n := range ns{
@@ -50,9 +52,10 @@ func TestFrontsearch(t *testing.T){
 			fmt.Printf("\n")
 		}
 	}else{
-		fmt.Printf("no invalid frontdoor")
+		fmt.Println("no invalid frontdoor")
 	}
-	status, zs = Frontminimal_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[3]})
+	fmt.Println("minimal:")
+	status, zs = Frontminimal_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,ns := range zs{
 			for _,n := range ns{
@@ -61,6 +64,43 @@ func TestFrontsearch(t *testing.T){
 			fmt.Printf("\n")
 		}
 	}else{
-		fmt.Printf("no invalid frontdoor")
+		fmt.Println("no invalid frontdoor")
+	}
+}
+
+func TestFrontsearch_2(t *testing.T){
+	d,nodes := front_example_3()
+	fmt.Println("search:")
+	status, z := Frontsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
+	if status{
+		for _,n := range z{
+			fmt.Println(n.Getname())
+		}
+	}else{
+		fmt.Println("no invalid frontdoor")
+	}
+	fmt.Println("all:")
+	status, zs := Frontallsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
+	if status{
+		for _,ns := range zs{
+			for _,n := range ns{
+				fmt.Printf("%s ",n.Getname())
+			}
+			fmt.Printf("\n")
+		}
+	}else{
+		fmt.Println("no invalid frontdoor")
+	}
+	fmt.Println("minimal:")
+	status, zs = Frontminimal_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
+	if status{
+		for _,ns := range zs{
+			for _,n := range ns{
+				fmt.Printf("%s ",n.Getname())
+			}
+			fmt.Printf("\n")
+		}
+	}else{
+		fmt.Println("no invalid frontdoor")
 	}
 }

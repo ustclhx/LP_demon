@@ -61,4 +61,44 @@ func  front_example_1() (*graph.Dag,[]*graph.Node){
 	d,_ := graph.NewDag(nodes,edges)
 	return d,nodes
 }
- 
+
+func front_example_2()(*graph.Dag,[]*graph.Node){
+	nodes := make([]*graph.Node,0)
+	edges := make([]*graph.Edge,0)
+	nodes = append(nodes,graph.NewNode("X",true),graph.NewNode("Z1",true),
+	graph.NewNode("Z2",true),graph.NewNode("Z3",true),graph.NewNode("Z4",true),
+	graph.NewNode("U1",false),graph.NewNode("U2",false),graph.NewNode("Y",true))
+	edges = append(edges,graph.NewEdge(nodes[0],graph.Tail,nodes[1],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[0],graph.Tail,nodes[3],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[1],graph.Tail,nodes[2],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[3],graph.Tail,nodes[4],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[2],graph.Tail,nodes[7],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[4],graph.Tail,nodes[7],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[5],graph.Tail,nodes[0],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[5],graph.Tail,nodes[7],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[6],graph.Tail,nodes[3],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[6],graph.Tail,nodes[7],graph.Arrow))
+	d,_ := graph.NewDag(nodes,edges)
+	return d,nodes	
+}
+
+func front_example_3()(*graph.Dag,[]*graph.Node){
+	nodes := make([]*graph.Node,0)
+	edges := make([]*graph.Edge,0)
+	nodes = append(nodes,graph.NewNode("X",true),graph.NewNode("Z1",true),
+	graph.NewNode("Z2",true),graph.NewNode("Z3",true),graph.NewNode("Z4",true),
+	graph.NewNode("U1",false),graph.NewNode("U2",false),graph.NewNode("Y",true))
+	edges = append(edges,graph.NewEdge(nodes[0],graph.Tail,nodes[1],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[0],graph.Tail,nodes[3],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[1],graph.Tail,nodes[2],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[3],graph.Tail,nodes[4],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[2],graph.Tail,nodes[7],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[4],graph.Tail,nodes[7],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[5],graph.Tail,nodes[0],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[5],graph.Tail,nodes[7],graph.Arrow))
+	//change the edges from U2 in last graph
+	edges = append(edges,graph.NewEdge(nodes[6],graph.Tail,nodes[4],graph.Arrow))
+	edges = append(edges,graph.NewEdge(nodes[6],graph.Tail,nodes[7],graph.Arrow))
+	d,_ := graph.NewDag(nodes,edges)
+	return d,nodes	
+}
