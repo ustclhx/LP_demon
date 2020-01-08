@@ -6,7 +6,7 @@ import(
 )
 
 //corresponding to Figure3.4 in 《Causality》
-func back_example_1() (*graph.Dag,[]*graph.Node){
+func Back_example_1() (*graph.Dag,[]*graph.Node){
 	nodes := make([]*graph.Node,0) 
 	edges := make([]*graph.Edge,0)
 	nodes = append(nodes,graph.NewDefaultNode("xi"))
@@ -29,7 +29,7 @@ func back_example_1() (*graph.Dag,[]*graph.Node){
 }
 
 //collider has a descendent
-func back_example_2()(*graph.Dag,[]*graph.Node){
+func Back_example_2()(*graph.Dag,[]*graph.Node){
 	nodes := make([]*graph.Node,0) 
 	edges := make([]*graph.Edge,0)
 	nodes = append(nodes,graph.NewDefaultNode("x"))
@@ -49,7 +49,7 @@ func back_example_2()(*graph.Dag,[]*graph.Node){
 	return d,nodes
 }
 
-func  front_example_1() (*graph.Dag,[]*graph.Node){
+func  Front_example_1() (*graph.Dag,[]*graph.Node){
 	nodes := make([]*graph.Node,0)
 	edges := make([]*graph.Edge,0)
 	nodes = append(nodes,graph.NewNode("X",true),graph.NewNode("Z",true),
@@ -62,7 +62,7 @@ func  front_example_1() (*graph.Dag,[]*graph.Node){
 	return d,nodes
 }
 
-func front_example_2()(*graph.Dag,[]*graph.Node){
+func Front_example_2()(*graph.Dag,[]*graph.Node){
 	nodes := make([]*graph.Node,0)
 	edges := make([]*graph.Edge,0)
 	nodes = append(nodes,graph.NewNode("X",true),graph.NewNode("Z1",true),
@@ -82,7 +82,7 @@ func front_example_2()(*graph.Dag,[]*graph.Node){
 	return d,nodes	
 }
 
-func front_example_3()(*graph.Dag,[]*graph.Node){
+func Front_example_3()(*graph.Dag,[]*graph.Node){
 	nodes := make([]*graph.Node,0)
 	edges := make([]*graph.Edge,0)
 	nodes = append(nodes,graph.NewNode("X",true),graph.NewNode("Z1",true),

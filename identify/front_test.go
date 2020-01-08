@@ -7,7 +7,7 @@ import(
 )
 
 func TestFrontverify(t *testing.T){
-	d,nodes := front_example_1()
+	d,nodes := Front_example_1()
 	if Frontverify_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[3]},[]graph.Node{*nodes[1]}){
 		fmt.Println("true")
 	}else{
@@ -32,7 +32,7 @@ func TestFrontverify(t *testing.T){
 }
 
 func TestFrontsearch(t *testing.T){
-	d,nodes := front_example_2()
+	d,nodes := Front_example_2()
 	fmt.Println("search:")
 	status, z := Frontsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	if status{
@@ -69,7 +69,7 @@ func TestFrontsearch(t *testing.T){
 }
 
 func TestFrontsearch_2(t *testing.T){
-	d,nodes := front_example_3()
+	d,nodes := Front_example_3()
 	fmt.Println("search:")
 	status, z := Frontsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	if status{

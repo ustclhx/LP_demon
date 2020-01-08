@@ -7,7 +7,7 @@ import(
 )
 
 func TestBackpath(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	backpath,desc := Backpath_dag_o2o(d,*nodes[5],*nodes[7])
 	for _,path := range backpath{
 		fmt.Println(path)
@@ -29,7 +29,7 @@ func TestBackpath(t *testing.T){
 }
 
 func TestBackverify(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	z := make([]graph.Node,0)
 	z = append(z,*nodes[4])
 	if Backverify_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]},z){
@@ -65,7 +65,7 @@ func TestBackverify(t *testing.T){
 }
 
 func TestBackSearch(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	status, z := Backsearch_dag(d,[]graph.Node{*nodes[5]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,n := range z{
@@ -77,7 +77,7 @@ func TestBackSearch(t *testing.T){
 }
 
 func TestBackAllSearch(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	status, zs := Backallsearch_dag(d,[]graph.Node{*nodes[5]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,ns := range zs{
@@ -92,7 +92,7 @@ func TestBackAllSearch(t *testing.T){
 }
 
 func TestBackMinimal(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	status, zs := Backminimal_dag(d,[]graph.Node{*nodes[5]},[]graph.Node{*nodes[7]})
 	if status{
 		for _,ns := range zs{
@@ -108,7 +108,7 @@ func TestBackMinimal(t *testing.T){
 
 //answer to study question 3.3.1 in 《Primer》
 func Test3_3_1(t *testing.T){
-	d,nodes := back_example_1()
+	d,nodes := Back_example_1()
 	status,zs := Backallsearch_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[7]})
 	fmt.Println("(a):")
 	if status{
@@ -149,7 +149,7 @@ func Test3_3_1(t *testing.T){
 
 
 func TestDescendant(t *testing.T){
-	d,nodes := back_example_2()
+	d,nodes := Back_example_2()
 	if Backverify_dag(d,[]graph.Node{*nodes[0]},[]graph.Node{*nodes[5]},[]graph.Node{*nodes[4]}){
 		fmt.Println("true")
 	}else{

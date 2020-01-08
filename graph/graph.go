@@ -8,6 +8,7 @@ import(
 type Graph struct{
 	nodes []*Node 
 	edges map[Node]map[Node]*Edge
+	node_index	map[string]*Node
 	in_degree map[Node]int  //just consider the in-degree in directed edge
 }
 
@@ -30,20 +31,43 @@ func (g Graph) IsAdjacentto(A Node, B Node) bool{
 	return ok
 }
 
+func (g Graph)IsDirectto(A Node, B Node) bool{
+	e,ok := g.edges[A][B]
+	if !ok{
+		return false
+	}else{
+		return e.endpoints[A] == Tail && e.endpoints[B]== Arrow
+	}
+	
+}
+
 func (g Graph) Edges(A Node) map[Node]*Edge{
 	return g.edges[A]
+}
+
+func (g Graph) GetNode(s string) (*Node,bool){
+	n,ok := g.node_index[s]
+	return n,ok
 }
 
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
 	edges := make(map[Node]map[Node]*Edge)
 	indegree := make(map[Node]int)
+	node_index := make(map[string]*Node)
 	for  _, node := range ns{
 		edges[*node] = make(map[Node]*Edge)
+		if _,ok := node_index[node.Getname()]; ok{
+			err = fmt.Errorf("There are two nodes have same names")
+			return 
+		}else{
+			node_index[node.Getname()] = node
+		}
 		indegree[*node] = 0
 	}
 	g = &Graph{
 		nodes : ns,
 		edges : edges,
+		node_index : node_index,
 		in_degree : indegree,
 	}
 	for _, e := range es{
@@ -54,9 +78,15 @@ func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
 	return 
 }
 
-func (g *Graph) AddNode(n *Node){
+func (g *Graph) AddNode(n *Node) (err error){
+	if _,ok := g.node_index[n.Getname()]; ok{
+		err = fmt.Errorf("There are two nodes have same names")
+		return 
+	}
+	g.node_index[n.Getname()] = n
 	g.nodes = append(g.nodes,n)
 	g.edges[*n] = make(map[Node]*Edge)
+	return nil
 }
 
 func (g *Graph) AddEdge(e *Edge)(err error){

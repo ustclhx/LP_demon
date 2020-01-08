@@ -4,6 +4,7 @@ import(
 	"LP_demon/graph"
 	"fmt"
 	"github.com/crillab/gophersat/solver"
+	"gonum.org/v1/gonum/stat/distuv"
 )
 
 func main(){
@@ -36,4 +37,8 @@ func main(){
 		}
 		fmt.Printf("\n")
 	}
+	n:=distuv.Normal{Mu:0,Sigma:1}
+	fmt.Println(n.Rand())
+	fmt.Println(n.Rand())
+	fmt.Println(n.Rand())
 }
