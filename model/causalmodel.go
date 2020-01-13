@@ -2,14 +2,16 @@ package model
 
 import(
 	"LP_demon/graph"
+	"LP_demon/estimate"
 )
 
 type casual_model struct {
 	graph graph.Graph
-	dataset  map[string][]float64
+	dataset  estimate.Dataset
+	starta []estimate.Dataset
 //	propensity map[string]
 }
-func NewModel(g graph.Graph, data map[string][]float64) (cm *casual_model){
+func NewModel(g graph.Graph, data estimate.Dataset) (cm *casual_model){
 	return &casual_model{
 		graph : g,
 		dataset : data,

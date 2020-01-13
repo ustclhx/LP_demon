@@ -45,9 +45,9 @@ func (g Graph) Edges(A Node) map[Node]*Edge{
 	return g.edges[A]
 }
 
-func (g Graph) GetNode(s string) (*Node,bool){
-	n,ok := g.node_index[s]
-	return n,ok
+func (g Graph) GetNode(s string) (*Node){
+	n,_ := g.node_index[s]
+	return n
 }
 
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
