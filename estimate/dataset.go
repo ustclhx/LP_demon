@@ -51,6 +51,7 @@ func (ds *Dataset) Head(i int){
 	}
 }
 
+//calculate the propensity score of dataset,using the method defined in f
 func (ds *Dataset) Propensity(f Propensity_function ,t string, co []string){
 	if err := f(ds,t,co); err != nil{
 		panic(err)
@@ -70,6 +71,46 @@ func (ds *Dataset) Swap(i,j int) {
 
 func (ds *Dataset) Less(i,j int) bool{
 	return ds.propensity_score[i] < ds.propensity_score[j]
+}
+
+//return the subset of the dataset from the ith element to the jth element
+func (ds *Dataset) subset(i,j int) Dataset{
+	if !(i<j)&&!(j<ds.sample){
+		panic("the arguments of Dataset.subject are not suitable")
+	}
+	data := make(map[string][]float64)
+	var propensity_score []float64
+	for s,v := range ds.data{
+		data[s] = v[i-1:j]
+	}
+	if ds.propensity_score != nil{
+		propensity_score = ds.propensity_score[i-1:j]
+	}else{
+		propensity_score = nil
+	}
+	return Dataset{
+		data : data,
+		propensity_score : propensity_score,
+		sample : j-i+1,
+	}
+}
+
+//calculate the average treat effect, ie: E(Y|X=1)-E(Y|X=0)
+func (ds *Dataset) ATE(treatment,outcome string) float64{
+	var t_count, c_count int
+	var t_sum, c_sum float64
+	for i := 0; i<ds.sample; i++{
+		if ds.data[treatment][i] == 0{
+			c_count ++
+			c_sum = c_sum + ds.data[outcome][i]
+		}else if ds.data[treatment][i] == 1{
+			t_count ++
+			t_sum = t_sum + ds.data[outcome][i]
+		}else{
+			panic("the treatment variable of ATE method should be a binary variable")
+		}
+	}
+    return t_sum/float64(t_count) - c_sum/float64(c_count)
 }
 
 // func ReadfromCSV()*dataset{
