@@ -50,6 +50,11 @@ func (g Graph) GetNode(s string) (*Node){
 	return n
 }
 
+func (g Graph) IsStringIn(s string) bool{
+	_,b := g.node_index[s]
+	return b 
+}
+
 func NewGraph(ns []*Node, es []*Edge) (g *Graph,err error){
 	edges := make(map[Node]map[Node]*Edge)
 	indegree := make(map[Node]int)
