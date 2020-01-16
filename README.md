@@ -28,15 +28,17 @@ And there are 3 dependent library of  v0.1.0(as it's a earliest beta version, th
 
 ## Wish List
 
-1.short-term:  
-* Improve the algorithm for identify(backdoor and frontdoor)
+1.short-term:     
+* Improve the algorithm for identify(backdoor and frontdoor)    
 * More estimation method
-* Frontdoor-based estimate
-* Mulitvariate treatment / Non-binary treatment  
+* Frontdoor-based estimate   
+* Mulitvariate treatment / Non-binary treatment    
+  
 2.long-term:
 * refute
 * pdag
-* discover  
+* discover
+    
 3.engineering:  
 * python api
 * distributed
