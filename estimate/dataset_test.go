@@ -15,6 +15,11 @@ func TestDataset(t *testing.T){
 	dataset,eff := Dag_linear_dataset(d,1000,src,nodes[0],nodes[7])
 	dataset.Head(10)
 	fmt.Println(eff)
+	if dataset,err := ReadfromCSV("test1.csv");err != nil{
+		fmt.Println(err.Error())
+	}else{
+		dataset.Head(10)
+	}
 }
 
 func TestPropensity(t *testing.T){

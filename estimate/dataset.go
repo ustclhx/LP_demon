@@ -2,12 +2,57 @@ package estimate
 
 import(
 	"fmt"
+	"encoding/csv"
+	"os"
+	"io"
+	"strconv"
 ) 
 
 type Dataset struct{
 	data map[string][]float64 
 	propensity_score []float64
 	sample int //the number of samples 
+}
+
+func ReadfromCSV(fliepath string) (*Dataset,error){
+	if _,err := os.Stat(fliepath); err != nil{
+		return nil,err
+	}
+	file,err := os.Open(fliepath)
+	if err != nil{
+		return nil,err
+	} 
+	defer file.Close()
+	reader := csv.NewReader(file)
+	var variables []string
+	data := make(map[string][]float64)
+	var sample int 
+	record,err := reader.Read()
+	if err != nil{
+		return nil,err
+	}else {
+		variables = record
+		// for _,s := range variables{
+		// 	data[s] = make([]float64,0)
+
+		// }
+	}
+	record,err = reader.Read()
+	for err != io.EOF{
+		for i,v := range record{
+			fl,er := strconv.ParseFloat(v,64)
+			if er != nil{
+				return nil, er
+			} 
+			data[variables[i]] = append(data[variables[i]],fl)	
+		}
+     	sample ++
+		record,err = reader.Read()	
+	}
+	return &Dataset{
+		data:data,
+		sample:sample,
+	},nil
 }
 
 func (ds *Dataset) GetVariate(s string) []float64{
@@ -112,7 +157,3 @@ func (ds *Dataset) ATE(treatment,outcome string) float64{
 	}
     return t_sum/float64(t_count) - c_sum/float64(c_count)
 }
-
-// func ReadfromCSV()*dataset{
-	
-// }
