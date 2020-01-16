@@ -18,9 +18,9 @@ You need to install [Go1.13 or later first](https://golang.org/doc/install).
 
 And there are 3 dependent library of  v0.1.0(as it's a earliest beta version, the dependencies may be changed in the future):
 
-*[gophersat](https://github.com/crillab/gophersat)  
-*[gonum](https://github.com/gonum/gonum)  
-*[goml](https://github.com/cdipaolo/goml)
+* [gophersat](https://github.com/crillab/gophersat)  
+* [gonum](https://github.com/gonum/gonum)  
+* [goml](https://github.com/cdipaolo/goml)
 
 ## Example 
 
