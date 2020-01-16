@@ -32,10 +32,6 @@ func ReadfromCSV(fliepath string) (*Dataset,error){
 		return nil,err
 	}else {
 		variables = record
-		// for _,s := range variables{
-		// 	data[s] = make([]float64,0)
-
-		// }
 	}
 	record,err = reader.Read()
 	for err != io.EOF{

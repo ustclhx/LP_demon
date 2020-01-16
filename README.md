@@ -25,3 +25,18 @@ And there are 3 dependent library of  v0.1.0(as it's a earliest beta version, th
 ## Example 
 
 [An easiest example](https://github.com/ustclhx/LP_demon/blob/master/example.go) of v0.1.0
+
+## Wish List
+
+1.short-term:  
+* Improve the algorithm for identify(backdoor and frontdoor)
+* More estimation method
+* Frontdoor-based estimate
+* Mulitvariate treatment / Non-binary treatment  
+2.long-term:
+* refute
+* pdag
+* discover  
+3.engineering:  
+* python api
+* distributed
